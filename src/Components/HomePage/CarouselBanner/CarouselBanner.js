@@ -16,14 +16,17 @@ class CarouselBanner extends React.Component {
 								<Carousel.Caption>
 									<h3 className="movie-title">{movie.title}</h3>
 									<h4>
-										<Label bsStyle="danger">
-											Rating {movie.popularity}
+										<Label bsStyle="default">
+											Rating {movie.vote_average}
 										</Label>
 									</h4>
+									<p>
+										{movie.overview}
+									</p>
 									<Link to={`/movie/${movie.id}`}>
 										<Button bsStyle="danger">
 											Know More
-									</Button>
+										</Button>
 									</Link>
 								</Carousel.Caption>
 							</Carousel.Item>

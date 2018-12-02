@@ -13,11 +13,16 @@ class MovieCard extends React.Component {
 					<Row>
 						<Col md={4} className="text-center">
 							<Link to={`/movie/${movieDetails.id}`}>
-								<img
+								{
+									movieDetails.poster_path ?
+									<img
 									src={`https://image.tmdb.org/t/p/w200/${movieDetails.poster_path}`}
 									alt={movieDetails.original_title}
 									title="Click here to know more"
-								/>
+									/>
+									:
+									`Image not available for ${movieDetails.original_title}` 
+								}
 							</Link>
 						</Col>
 

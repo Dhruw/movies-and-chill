@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import './App.css';
 
@@ -9,14 +9,21 @@ import SearchResult from './Components/SearchResult/SearchResult';
 import MovieDetail from './Components/MovieDetail/MovieDetail';
 import ActorDetail from './Components/ActorDetail/ActorDetail';
 import HomePage from './Components/HomePage/HomePage';
+import Message from './Components/Common/Message/Message';
 
 import API_KEY from './key/key';
 
 class App extends Component {
 
+	// 0 : Welcome
+	// 1 : Loading
+	// 2 : Show Results
+	// 4 : No Result
+
 	state = {
 		searchResults: null,
 		searchText: "",
+		screenState: 0,
 		page: 1
 	}
 
@@ -25,7 +32,7 @@ class App extends Component {
 	}
 
 	searchFunction = (page = 1) => {
-		this.setState({ resultStatus: 1 })
+		this.setState({ screenState: 1 })
 		axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${this.state.searchText}&page=${page}`)
 			.then(response => {
 
@@ -39,12 +46,13 @@ class App extends Component {
 					totalPages: response.data.total_pages,
 					totalResults: response.data.total_results,
 					currentPage: response.data.page,
-					resultStatus: 2,
+					screenState: 2,
 				})
 
 			})
 			.catch(error => {
 				console.log(error)
+				this.setState({ screenState: 4 })
 			})
 	}
 
@@ -56,38 +64,51 @@ class App extends Component {
 					searchFunction={this.searchFunction}
 				/>
 
-				<Route
-					path="/searchresults"
-					render={(routeProps) => <SearchResult
-						{...routeProps}
-						
-						setMovieDetails={this.setMovieDetails}
-						searchFunction={this.searchFunction}
+				<Switch>
 
-						searchResults={this.state.searchResults}
-						totalPages={this.state.totalPages}
-						totalResults={this.state.totalResults}
-						currentPage={this.state.currentPage}
-					/>}
-				/>
+					<Route
+						path="/"
+						exact
+						component={HomePage}
+					/>
+
+					<Route
+						path="/searchresults"
+						render={(routeProps) => <SearchResult
+							{...routeProps}
+
+							setMovieDetails={this.setMovieDetails}
+							searchFunction={this.searchFunction}
+
+							searchResults={this.state.searchResults}
+							totalPages={this.state.totalPages}
+							totalResults={this.state.totalResults}
+							currentPage={this.state.currentPage}
+							screenState={this.state.screenState}
+						/>}
+					/>
 
 
-				<Route
-					path="/movie/:id"
-					component={MovieDetail}
-				/>
+					<Route
+						path="/movie/:id"
+						component={MovieDetail}
+					/>
 
-				<Route
-					path="/"
-					exact
-					component={HomePage}
-				/>
+					<Route
+						path="/profile/:id"
+						exact
+						component={ActorDetail}
+					/>
 
-				<Route
-					path="/profile/:id"
-					exact
-					component={ActorDetail}
-				/>
+					<Route
+						exact
+						render={() => <Message
+							classes="fa fa-exclamation-triangle"
+							message="Page Not Found"
+						/>
+						}
+					/>
+				</Switch>
 
 			</React.Fragment>
 		);
@@ -96,5 +117,3 @@ class App extends Component {
 }
 
 export default App;
-
-			// https://image.tmdb.org/t/p/w200//xgbeBCjmFpRYHDF7tQ7U98EREWp.jpg
