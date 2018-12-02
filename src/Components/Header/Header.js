@@ -1,14 +1,18 @@
 import React from 'react';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 class Header extends React.Component {
 
 	render() {
 		return (
-			<Navbar inverse collapseOnSelect>
+			<Navbar inverse collapseOnSelect fixedTop>
 				<Navbar.Header>
 					<Navbar.Brand>
-						<a href="#brand">Movies and Chill</a>
+						<Link to="/">
+							Movies and Chill
+						</Link>
+						{/* <a href="#brand">Movies and Chill</a> */}
 					</Navbar.Brand>
 					<Navbar.Form pullLeft>
 					<FormGroup>
