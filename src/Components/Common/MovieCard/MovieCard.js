@@ -1,6 +1,5 @@
 import React from 'react';
-// import { Panel } from 'react-bootstrap';
-import { Panel, Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 class MovieCard extends React.Component {
@@ -13,32 +12,30 @@ class MovieCard extends React.Component {
 				<Grid fluid>
 					<Row>
 						<Col md={4} className="text-center">
-							<Link to={`/movie/${movieDetails.title}`}>
-								<img src={`https://image.tmdb.org/t/p/w200/${movieDetails.poster_path}`} alt=""
-									onClick={() => this.props.setMovieDetails(movieDetails)}
+							<Link to={`/movie/${movieDetails.id}`}>
+								<img
+									src={`https://image.tmdb.org/t/p/w200/${movieDetails.poster_path}`}
+									alt={movieDetails.original_title}
+									title="Click here to know more"
 								/>
 							</Link>
 						</Col>
 
 						<Col md={8}>
-							<h3>
-								{movieDetails.original_title}
-							</h3>
+							<Link to={`/movie/${movieDetails.id}`}>
+								<h3 title="Click here to know more">
+									{movieDetails.original_title}
+								</h3>
+							</Link>
 							<hr />
-
-							{movieDetails.vote_count}  		<br />
-							{movieDetails.vote_average}  		<br />
-							{movieDetails.popularity}  		<br />
-							{movieDetails.original_language}  	<br />
-							{movieDetails.adult}				<br />
-							{movieDetails.overview}			<br />
-							{movieDetails.release_date}		<br />
-						</Col>
-						<Col md={3}>
-
-						</Col>
-						<Col md={9}>
-
+							Rating: {movieDetails.vote_average}  <small>(Based on {movieDetails.vote_count} votes)</small>
+							<br />
+							Language: {movieDetails.original_language}  	<br />
+							Release Date: {movieDetails.release_date}		<br />
+							<br />
+							<p>
+								{movieDetails.overview}
+							</p>
 						</Col>
 					</Row>
 				</Grid>

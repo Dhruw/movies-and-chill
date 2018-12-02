@@ -10,55 +10,21 @@ import MovieDetail from './Components/MovieDetail/MovieDetail';
 import ActorDetail from './Components/ActorDetail/ActorDetail';
 import HomePage from './Components/HomePage/HomePage';
 
+import API_KEY from './key/key';
+
 class App extends Component {
 
 	state = {
 		searchResults: null,
 		searchText: "",
-		movieDetail:
-		{
-			adult: false,
-			backdrop_path: "/VuukZLgaCrho2Ar8Scl9HtV3yD.jpg",
-			id: 335983,
-			original_language: "en",
-			original_title: "Venom",
-			overview: "Eddie Brock is a reporter—investigating people who want to go unnoticed. But after he makes a terrible discovery at the Life Foundation, he begins to transform into ‘Venom’.  The Foundation has discov…",
-			popularity: 503.845,
-			poster_path: "/2uNW4WbgBXL25BAbXGLnLqX71Sw.jpg",
-			release_date: "2018-10-03",
-			title: "Venom",
-			video: false,
-			vote_average: 6.5,
-			vote_count: 2613
-		},
-		movieCast: [{
-			"cast_id": 10,
-			"character": "Eddie Brock / Venom",
-			"credit_id": "591f425ac3a368774e039245",
-			"gender": 2,
-			"id": 2524,
-			"name": "Tom Hardy",
-			"order": 0,
-			"profile_path": "/4CR1D9VLWZcmGgh4b6kKuY2NOel.jpg",
-		}, {
-			"cast_id": 13,
-			"character": "Anne Weying",
-			"credit_id": "59cbebd2c3a368773d017419",
-			"gender": 1,
-			"id": 1812,
-			"name": "Michelle Williams",
-			"order": 1,
-			"profile_path": "/r4HQM2gO9Q7Ti7sJcRE4hcP8ddN.jpg",
-		}],
-		actorDetail: null,
+		movieDetail: null,
+		movieCast: null,
 		trendingMovies: null,
 		page: 1
 	}
 
-	api_key = 'eaac0841ce9cf1954372eec12aa4c724';
-
 	setTrendingMovies = () => {
-		axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${this.api_key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
+		axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
 			.then(response => {
 				let trendingMovies = response.data.results
 				this.setState({ trendingMovies })
@@ -67,26 +33,10 @@ class App extends Component {
 				console.log(error)
 			})
 	}
-	setMovieDetails = movieDetail => {
-		this.setState({ movieDetail })
-		this.setCastDetails(movieDetail.id)
-	}
-
-	setCastDetails = movieID => {
-		axios.get(`https://api.themoviedb.org/3/movie/${movieID}/credits?api_key=${this.api_key}`)
-			.then(response => {
-				let movieCast = response.data.cast.slice(0, 10)
-				this.setState({ movieCast })
-			})
-			.catch(error => {
-				console.log(error)
-			})
-
-	}
 
 	setActorDetails = actorID => {
 
-		axios.get(`https://api.themoviedb.org/3/person/${actorID}?api_key=${this.api_key}&language=en-US`)
+		axios.get(`https://api.themoviedb.org/3/person/${actorID}?api_key=${API_KEY}&language=en-US`)
 			.then(response => {
 				let actorDetail = response.data
 				this.setState({ actorDetail })
@@ -102,7 +52,7 @@ class App extends Component {
 
 	searchFunction = (page = 1) => {
 		this.setState({ resultStatus: 1 })
-		axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${this.api_key}&query=${this.state.searchText}&page=${page}`)
+		axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${this.state.searchText}&page=${page}`)
 			.then(response => {
 
 				// 0 : Welcome
@@ -163,8 +113,9 @@ class App extends Component {
 				} */}
 
 				<Route
-					path="/movie"
-					render={() => <MovieDetail
+					path="/movie/:id"
+					render={(routeProps) => <MovieDetail
+						{...routeProps}
 						movieDetail={this.state.movieDetail}
 						movieCast={this.state.movieCast}
 						setActorDetails={this.setActorDetails}
@@ -181,9 +132,10 @@ class App extends Component {
 				/>
 
 				<Route
-					path="/cast"
+					path="/profile/:id"
 					exact
-					render={() => <ActorDetail
+					render={(routeProps) => <ActorDetail
+						{...routeProps}
 						actorDetail={this.state.actorDetail}
 					/>}
 				/>

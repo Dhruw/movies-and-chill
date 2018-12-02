@@ -12,19 +12,18 @@ class Header extends React.Component {
 						<Link to="/">
 							Movies and Chill
 						</Link>
-						{/* <a href="#brand">Movies and Chill</a> */}
 					</Navbar.Brand>
 					<Navbar.Form pullLeft>
-					<FormGroup>
-						<FormControl type="text" placeholder="Search" onChange={event => this.props.updateSearchText(event)}/>
-					</FormGroup>{' '}
-					<Button type="submit" onClick={this.props.searchFunction}>Submit</Button>
+						<FormGroup>
+							<FormControl type="text" placeholder="Search" onChange={event => this.props.updateSearchText(event)} />
+						</FormGroup>{' '}
+						<Button type="submit" onClick={this.props.searchFunction}>Submit</Button>
 					</Navbar.Form>
 					<Navbar.Toggle />
 				</Navbar.Header>
 				<Navbar.Collapse>
 					<Nav>
-						<NavItem eventKey={1} href="#">
+						{/* <NavItem eventKey={1} href="#">
 							Link
       					</NavItem>
 						<NavItem eventKey={2} href="#">
@@ -36,15 +35,15 @@ class Header extends React.Component {
 							<MenuItem eventKey={3.3}>Something else here</MenuItem>
 							<MenuItem divider />
 							<MenuItem eventKey={3.3}>Separated link</MenuItem>
-						</NavDropdown>
+						</NavDropdown> */}
 					</Nav>
 					<Nav pullRight>
-						<NavItem eventKey={1} href="#">
+						{/* <NavItem eventKey={1} href="#">
 							Link Right
       					</NavItem>
 						<NavItem eventKey={2} href="#">
 							Link Right
-      					</NavItem>
+      					</NavItem> */}
 					</Nav>
 				</Navbar.Collapse>
 			</Navbar>

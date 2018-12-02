@@ -1,41 +1,129 @@
 import React from 'react';
+import axios from 'axios';
+import { Table, Grid, Row, Col } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
+
+import API_KEY from '../../key/key';
 
 class ActorDetail extends React.Component {
 
-	render(){
-		return (
-			<div>
-				{this.props.actorDetail.birthday}   <br/>
-				{this.props.actorDetail.known_for_department}   <br/>
-				{this.props.actorDetail.deathday}   <br/>
-				{this.props.actorDetail.id}   <br/>
-				{this.props.actorDetail.name}   <br/>
-				{/* also_known_as {
-				  "Гаррісон Форд",
-				  "Харрисон Форд",
-				  "هاريسون فورد",
-				  "해리슨 포드",
-				  "ハリソン・フォード",
-				  "แฮร์ริสัน ฟอร์ด",
-				  "哈里森·福特",
-				  "Харисън Форд"
-				], */}
-				{this.props.actorDetail.gender}    <br/>
-				{this.props.actorDetail.biography}    <br/>
-				{this.props.actorDetail.popularity}    <br/>
-				{this.props.actorDetail.place_of_birth}    <br/>
-				<img src={`https://image.tmdb.org/t/p/w200/${this.props.actorDetail.profile_path}`} alt="" />
+	state = {
+		actorDetail: null
+	}
 
-				{this.props.actorDetail.profile_path}    <br/>
-				{this.props.actorDetail.adult}    <br/>
-				{this.props.actorDetail.imdb_id}    <br/>
-				{this.props.actorDetail.homepage}    <br/>
-			</div>
-		)
+	componentDidMount() {
+		let actorID = this.props.match.params.id;
+		this.getActorDetails(actorID)
+	}
+	getActorDetails = actorID => {
+
+		axios.get(`https://api.themoviedb.org/3/person/${actorID}?api_key=${API_KEY}&language=en-US`)
+			.then(response => {
+				let actorDetail = response.data
+				this.setState({ actorDetail })
+			})
+			.catch(error => {
+				console.log(error)
+			})
+	}
+
+	render() {
+		let actorDetail = this.state.actorDetail;
+		if (actorDetail)
+			return (
+				<Grid style={{
+					"marginTop": "200px",
+					"backgroundColor": "#fff",
+					"borderRadius": "5px",
+					"paddingTop": "15px"
+
+				}}
+				>
+					<Row>
+						<Col md={12}>
+							<h3>
+								{actorDetail.name}
+							</h3>
+							<hr />
+							<Grid fluid>
+								<Row>
+									<Col md={3} className="text-center">
+										<img src={`https://image.tmdb.org/t/p/w200/${this.state.actorDetail.profile_path}`} alt={actorDetail.name} />
+									</Col>
+									<Col md={9}>
+										<Table>
+											<tbody>
+												<tr>
+													<td>Known For:</td>
+													<td>
+														{actorDetail.known_for_department}
+													</td>
+												</tr>
+												<tr>
+													<td>Born:</td>
+													<td>
+														{actorDetail.birthday}
+
+													</td>
+												</tr>
+												<tr>
+													<td>Died:</td>
+													<td>
+														{actorDetail.deathday}
+
+													</td>
+												</tr>
+												<tr>
+													<td>Gender:</td>
+													<td>
+														{actorDetail.gender}
+													</td>
+												</tr>
+												<tr>
+													<td>Popularity:</td>
+													<td>
+														{actorDetail.popularity}
+													</td>
+												</tr>
+												<tr>
+													<td>Birth Place:</td>
+													<td>
+														{actorDetail.place_of_birth}
+													</td>
+												</tr>
+												<tr>
+													<td>IMDB ID:</td>
+													<td>
+														{actorDetail.imdb_id}
+													</td>
+												</tr>
+												<tr>
+													<td></td>
+													<td>
+														<a href={actorDetail.homepage} target="_blank" rel="noopener noreferrer"> Website </a>     <br />
+													</td>
+												</tr>
+												<tr>
+													<td>Bio:</td>
+													<td>
+														{actorDetail.biography}    <br />
+													</td>
+												</tr>
+											</tbody>
+										</Table>
+									</Col>
+								</Row>
+							</Grid>
+						</Col>
+					</Row>
+				</Grid>
+			)
+		else
+			return null
 	}
 }
 
-export default ActorDetail;
+export default withRouter(ActorDetail);
 
 
 // {

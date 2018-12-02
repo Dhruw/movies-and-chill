@@ -1,5 +1,6 @@
 body {
 	background-color: #eee;
+	margin-top: 30px;
 }
 
 .carousel {
@@ -17,6 +18,10 @@ body {
 
 .carousel .carousel-caption {
 	top: 100px;
+}
+
+.carousel .movie-title, .carousel .movie-rating {
+	text-shadow: 9px 9px 20px #000;
 }
 
 .movieCard {

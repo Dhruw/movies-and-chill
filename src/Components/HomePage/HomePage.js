@@ -12,7 +12,6 @@ class HomePage extends React.Component {
 					<CarouselBanner
 						trendingMovies={this.props.trendingMovies.slice(0, 5)}
 						setMovieDetails={this.props.setMovieDetails}
-
 					/>
 					<Grid>
 						<Row>
