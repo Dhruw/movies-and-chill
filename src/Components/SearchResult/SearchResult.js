@@ -1,67 +1,53 @@
 import React from 'react';
-import { Panel, Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col } from 'react-bootstrap';
+
+import MovieCard from '../Common/MovieCard/MovieCard';
+import Paginations from './Paginations/Paginations';
 
 class SearchResult extends React.Component {
 	render() {
-		return (
-			<Grid>
-				<Row>
-					<Col md={12}>
-						{
-							this.props.searchResults.map(
-								movieDetails => {
-									return (
-										<Panel 
-											key={movieDetails.id}
-											// onClick={this.props.setMovieDetails}
-											>
-										{/* <Panel key={movieDetails.id}> */}
-											<Panel.Heading>
-												{movieDetails.title}  				<br />
-											</Panel.Heading>
-											<Panel.Body>
-												<Grid fluid>
-													<Row>
-														<Col md={4}>
-															<img src={`https://image.tmdb.org/t/p/w200/${movieDetails.poster_path}`} alt="" 
-															// onClick={this.props.setMovieDetails}
-															onClick={() => this.props.setMovieDetails(movieDetails)}
-															/>
-														</Col>
+		if (this.props.searchResults)
+			return (
+				<Grid>
+					<Row>
+						<Col md={12}>
+							<div style={{
+								'paddingTop': '50px'
+							}}>
+								{this.props.totalResults} movies found <br/>
+								Page {this.props.currentPage} of {this.props.totalPages}
+	
+							</div>
 
-														<Col md={8}>
+							{
+								this.props.searchResults.map(
+									movie => {
+										return (
+											<MovieCard
+												key={movie.id}
+												movieDetails={movie}
+												setMovieDetails={this.props.setMovieDetails}
+											/>
 
-															{movieDetails.vote_count}  		<br />
-															{movieDetails.vote_average}  		<br />
-															{movieDetails.popularity}  		<br />
-															{movieDetails.poster_path}  		<br />
-															{movieDetails.original_language}  	<br />
-															{movieDetails.original_title}  	<br />
-															{/* "genre_ids": [
-													18,
-													28,
-													878
-												], */}
-															<img src={`https://image.tmdb.org/t/p/w200/${movieDetails.backdrop_path}`} alt="" />
+										)
+									}
+								)
+							}
 
-															{movieDetails.backdrop_path}		<br />
-															{movieDetails.adult}				<br />
-															{movieDetails.overview}			<br />
-															{movieDetails.release_date}		<br />
-														</Col>
-													</Row>
-												</Grid>
+							<Paginations
+								// updatePage={this.props.updatePage}
+								currentPage={this.props.currentPage}
+								totalPages={this.props.totalPages}
+								totalResults={this.props.searchResults['total-results']}
+								searchFunction={this.props.searchFunction}
+							/>
 
-											</Panel.Body>
-										</Panel>
-									)
-								}
-							)
-						}
-					</Col>
-				</Row>
-			</Grid>
-		)
+						</Col>
+					</Row>
+				</Grid>
+			)
+		else
+			return null
 	}
 }
 

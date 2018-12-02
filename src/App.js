@@ -17,33 +17,7 @@ class App extends Component {
 	state = {
 		searchResults: null,
 		searchText: "",
-		movieDetail: null,
-		movieCast: null,
-		trendingMovies: null,
 		page: 1
-	}
-
-	setTrendingMovies = () => {
-		axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
-			.then(response => {
-				let trendingMovies = response.data.results
-				this.setState({ trendingMovies })
-			})
-			.catch(error => {
-				console.log(error)
-			})
-	}
-
-	setActorDetails = actorID => {
-
-		axios.get(`https://api.themoviedb.org/3/person/${actorID}?api_key=${API_KEY}&language=en-US`)
-			.then(response => {
-				let actorDetail = response.data
-				this.setState({ actorDetail })
-			})
-			.catch(error => {
-				console.log(error)
-			})
 	}
 
 	updateSearchText = (event) => {
@@ -64,6 +38,7 @@ class App extends Component {
 					searchResults: response.data.results,
 					totalPages: response.data.total_pages,
 					totalResults: response.data.total_results,
+					currentPage: response.data.page,
 					resultStatus: 2,
 				})
 
@@ -75,80 +50,51 @@ class App extends Component {
 
 	render() {
 		return (
-			// <BrowserRouter></BrowserRouter>
 			<React.Fragment>
 				<Header
 					updateSearchText={this.updateSearchText}
 					searchFunction={this.searchFunction}
 				/>
 
-				{/* {
-					this.state.searchResults ?
-						<SearchResult
-							searchResults={this.state.searchResults}
-							setMovieDetails={this.setMovieDetails}
-						/>
-						:
-						null
-				}
-				*/
+				<Route
+					path="/searchresults"
+					render={(routeProps) => <SearchResult
+						{...routeProps}
+						
+						setMovieDetails={this.setMovieDetails}
+						searchFunction={this.searchFunction}
 
-				/*
-				{
-					this.state.actorDetail ?
-						<ActorDetail
-							actorDetail={this.state.actorDetail}
-						/>
-						:
-						null
-				}
-				{
-					this.state.trendingMovies ?
-						<SearchResult
-							searchResults={this.state.trendingMovies}
-							setMovieDetails={this.setMovieDetails}
-						/>
-						:
-						null
-				} */}
+						searchResults={this.state.searchResults}
+						totalPages={this.state.totalPages}
+						totalResults={this.state.totalResults}
+						currentPage={this.state.currentPage}
+					/>}
+				/>
+
 
 				<Route
 					path="/movie/:id"
-					render={(routeProps) => <MovieDetail
-						{...routeProps}
-						movieDetail={this.state.movieDetail}
-						movieCast={this.state.movieCast}
-						setActorDetails={this.setActorDetails}
-					/>}
+					component={MovieDetail}
 				/>
 
 				<Route
 					path="/"
 					exact
-					render={() => <HomePage
-						trendingMovies={this.state.trendingMovies}
-						setMovieDetails={this.setMovieDetails}
-					/>}
+					component={HomePage}
 				/>
 
 				<Route
 					path="/profile/:id"
 					exact
-					render={(routeProps) => <ActorDetail
-						{...routeProps}
-						actorDetail={this.state.actorDetail}
-					/>}
+					component={ActorDetail}
 				/>
 
 			</React.Fragment>
 		);
 	}
 
-	componentDidMount() {
-		this.setTrendingMovies();
-	}
 }
 
 export default App;
 
-// https://image.tmdb.org/t/p/w200//xgbeBCjmFpRYHDF7tQ7U98EREWp.jpg
+			// https://image.tmdb.org/t/p/w200//xgbeBCjmFpRYHDF7tQ7U98EREWp.jpg

@@ -13,7 +13,6 @@ class TrendingList extends React.Component {
 							<MovieCard
 								key={movie.id}
 								movieDetails={movie}
-								setMovieDetails={this.props.setMovieDetails}
 							/>)
 				}
 			</React.Fragment>

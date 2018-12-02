@@ -15,9 +15,16 @@ class Header extends React.Component {
 					</Navbar.Brand>
 					<Navbar.Form pullLeft>
 						<FormGroup>
-							<FormControl type="text" placeholder="Search" onChange={event => this.props.updateSearchText(event)} />
+							<FormControl 
+								type="text" 
+								placeholder="Search" 
+								onChange={event => this.props.updateSearchText(event)} 
+								onKeyPress={(event) => { if (event.key === 'Enter') this.props.searchFunction() }}
+							/>
 						</FormGroup>{' '}
-						<Button type="submit" onClick={this.props.searchFunction}>Submit</Button>
+						<Link to="/searchresults">
+						<Button type="submit" onClick={this.props.searchFunction}>Search</Button>
+						</Link>
 					</Navbar.Form>
 					<Navbar.Toggle />
 				</Navbar.Header>
