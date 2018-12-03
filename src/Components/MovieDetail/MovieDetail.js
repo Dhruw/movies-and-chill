@@ -62,18 +62,15 @@ class MovieDetail extends React.Component {
 
 				if (this.state.movieDetail) {
 					return (
-						<Grid fluid style={{
-							"background": `url(https://image.tmdb.org/t/p/original/${this.state.movieDetail.backdrop_path})`,
-							"backgroundPosition": "center top"
-						}}>
+						<Grid
+							fluid
+							className="movieDetails-grid"
+							style={{
+								"background": `url(https://image.tmdb.org/t/p/original/${this.state.movieDetail.backdrop_path})`,
+							}}>
 							<Row>
 								<Col>
-									<Grid style={{
-										"marginTop": "200px",
-										"backgroundColor": "#fff",
-										"borderRadius": "5px",
-										"paddingTop": "15px"
-									}}>
+									<Grid className="movieDetails-grid-panel" >
 										<Row>
 											<Col md={3} className="text-center">
 												<img src={`https://image.tmdb.org/t/p/w200/${this.state.movieDetail.poster_path}`} alt={this.state.movieDetail.title} />
@@ -81,6 +78,7 @@ class MovieDetail extends React.Component {
 											<Col md={9}>
 												<h2>
 													{this.state.movieDetail.title}
+													<br className="visible-sm visible-xs" />
 													<small>
 														{this.state.movieDetail.tagline}
 													</small>

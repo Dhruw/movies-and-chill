@@ -3,8 +3,8 @@ body {
 	margin-top: 30px;
 }
 
-.carousel {
-
+.carousel h3 {
+	color: #fff;
 }
 
 .carousel img {
@@ -20,12 +20,13 @@ body {
 	top: 100px;
 }
 
-.carousel .movie-title, .carousel .movie-rating {
+.carousel .movie-title,
+.carousel .movie-rating {
 	text-shadow: 9px 9px 20px #000;
 }
 
 .movieCard {
-	background-color: #fff;	
+	background-color: #fff;
 	margin: 50px 10px;
 	box-shadow: 3px 3px 10px #ccc;
 	transition: all .5s;
@@ -33,4 +34,42 @@ body {
 
 .movieCard:hover {
 	box-shadow: 9px 9px 20px #aaa;
+}
+
+.movieDetails-grid {
+	background-position: center top;
+}
+
+.movieDetails-grid .movieDetails-grid-panel {
+	margin-top: 200px;
+	background-color: #fff;
+	border-radius: 5px;
+	padding-top: 15px;
+}
+
+.actor-detail-grid {
+	margin-top : 100px;
+	background-color : #fff;
+	border-radius : 5px;
+	padding-top : 15p;
+}
+
+@media only screen and (min-width : 320px) {
+
+	.carousel {
+		padding-top: 40px;
+	}
+
+	.carousel .carousel-caption {
+		top: 0px;
+	}
+
+	.movieDetails-grid .movieDetails-grid-panel {
+		margin-top: 40px;
+	}
+
+	.actor-detail-grid{
+		margin-top: 70px;
+	}
+	
 }

@@ -8,7 +8,7 @@ class Header extends React.Component {
 		return (
 			<Navbar inverse collapseOnSelect fixedTop>
 				<Navbar.Header>
-					<Navbar.Brand>
+					<Navbar.Brand className="hidden-xs">
 						<Link to="/">
 							Movies and Chill
 						</Link>
@@ -19,9 +19,9 @@ class Header extends React.Component {
 							<InputGroup>
 								<FormControl
 									type="text"
-									placeholder="Search"
+									placeholder="Search Movies . . ."
 									onChange={event => this.props.updateSearchText(event)}
-									onKeyPress={(event) => { console.log(event.key); if (event.key === 'Enter') this.props.searchFunction() }}
+									onKeyPress={(event) => { if (event.key === 'Enter') this.props.searchFunction() }}
 								/>
 								<InputGroup.Button>
 									<Link to="/searchresults">

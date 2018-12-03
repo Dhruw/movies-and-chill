@@ -50,14 +50,7 @@ class ActorDetail extends React.Component {
 
 				if (actorDetail)
 					return (
-						<Grid style={{
-							"marginTop": "100px",
-							"backgroundColor": "#fff",
-							"borderRadius": "5px",
-							"paddingTop": "15px"
-
-						}}
-						>
+						<Grid className="actor-detail-grid">
 							<Row>
 								<Col md={12}>
 									<h3 className="text-center">
